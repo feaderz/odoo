@@ -471,7 +471,8 @@ class RecurrenceRule(models.Model):
         elif freq == 'weekly':
             weekdays = self._get_week_days()
             if not weekdays:
-                raise UserError(_("You have to choose at least one day in the week"))
+                self.sa = True
+                weekdays = self._get_week_days()
             rrule_params['byweekday'] = weekdays
             rrule_params['wkst'] = self._get_lang_week_start()
 

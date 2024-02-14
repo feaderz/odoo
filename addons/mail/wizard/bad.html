@@ -1,0 +1,3209 @@
+Delivered-To: vpichery@gmail.com
+Received: by 2002:a05:6512:6cc:0:0:0:0 with SMTP id u12csp2828780lff;
+        Thu, 28 Apr 2022 06:33:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:2151:b0:38f:f852:b7ea with SMTP id v17-20020a05600c215100b0038ff852b7eamr31301176wml.16.1651152811719;
+        Thu, 28 Apr 2022 06:33:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1651152811; cv=none;
+        d=google.com; s=arc-20160816;
+        b=S8effbo94nC/efzmso6vJBaUYmwIkHWHri9dGvrpjang/sPoMaQJsbXRgG2tDUaXLQ
+         itdpOqaMif2LkKuwxkaFP1cyYgRHflawUEw2nN7YHeWdwLa6k3Q3WpLOHeKoEjtOrOd3
+         g3WvQGK54vuIJ2Oqz/XDY3jCx/dNkl2uvUy0awTja1rt0QnfH8XE4AVWw0tkNeCFebuI
+         406yGoR3ZsdekLlKa3dauOsPvq17D4QEhy7NpM0ytX6qMUgg8jCW9vcITxB932oelJr5
+         WER9Hreo2JA9P9ZW7kk6Wi7uPRNRkyE/7ZM1V8XGBeYCliyjv0shWUwbD7IwmPmAWpmD
+         sx4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=date:to:reply-to:subject:message-id:mime-version:from
+         :dkim-signature;
+        bh=OfehKCMxdDQoeDzp2YA6h80Vdtg1zDuDbAxXy3TZtHg=;
+        b=DUWfHdZa74wS6QnNsEE8sroPGJDU7tZZg3sK3ups593hjwGv1MbsF4L2TtLAr2a4dp
+         Y0Yw+LljCnpWREhG7ZLLxQTPphge+l/Ojq1MDhR2ehk8fN3Cxun3eLxNCSPcdhdZHUkz
+         1K1KXlx0cWlSrwbh6Lrlmk17Kk8Idqs1MpThE8FQWa5YDsVvVe7e9cg/XciQSAmUImFU
+         1nNehvYejkw/F+qQ4ETmfqv9j8nW15X0iR6pUuUxkn/IhONcE3VnWwBjZCCz1v0oDfGJ
+         5ZmcKEFGGZd6vdhQfuiAQrPyiRgUYuHU8lXNEHv9QL1BEvTi6kBleZJAtX6VmQ17S0pl
+         caqA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@opaal-io.20210112.gappssmtp.com header.s=20210112 header.b=0N1L+mQ0;
+       spf=pass (google.com: domain of vincent@opaal.io designates 209.85.220.41 as permitted sender) smtp.mailfrom=vincent@opaal.io;
+       dmarc=pass (p=QUARANTINE sp=NONE dis=NONE) header.from=opaal.io
+Return-Path: <vincent@opaal.io>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id p22-20020a05600c359600b0038cb27f4911sor3013549wmq.1.2022.04.28.06.33.31
+        for <vpichery@gmail.com>
+        (Google Transport Security);
+        Thu, 28 Apr 2022 06:33:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of vincent@opaal.io designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@opaal-io.20210112.gappssmtp.com header.s=20210112 header.b=0N1L+mQ0;
+       spf=pass (google.com: domain of vincent@opaal.io designates 209.85.220.41 as permitted sender) smtp.mailfrom=vincent@opaal.io;
+       dmarc=pass (p=QUARANTINE sp=NONE dis=NONE) header.from=opaal.io
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=opaal-io.20210112.gappssmtp.com; s=20210112;
+        h=from:mime-version:message-id:subject:reply-to:to:date;
+        bh=OfehKCMxdDQoeDzp2YA6h80Vdtg1zDuDbAxXy3TZtHg=;
+        b=0N1L+mQ0GHXZc/hpuIopW52/YHKge7ST6Ts4TM0nO4lrl5Or+bAZcfO0USD7BxKNqU
+         0j2NSd08wxygjoZ6qUA49jbPkhP4vByRLVG/Wm87bmfZFnerRZMJ9Zav1hKPmT8Nx7Dk
+         xjcHtLxr/CPbswLz3k1P7CTBMMWwZqXfyQdNtpGIMAEjXPCrhMRcGTxjIMynZOm06nWe
+         KmoPUR3iQ7+MU+B1/2FuNfu9bnJ2aAQWUt/+rAgS49DeIQQLTgYrgEULRCpqSIMy9838
+         eLVbNNfdiUULsNwk2UHoGczX+siag9cp+zNXlOeVCwr49LW4DiFKAAhnUvvedCaaCL9t
+         b9iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:mime-version:message-id:subject:reply-to:to
+         :date;
+        bh=OfehKCMxdDQoeDzp2YA6h80Vdtg1zDuDbAxXy3TZtHg=;
+        b=y+hff7GlU5MF3xzaQ4LhlEzKjqOifeLoEeL9CGe5mk2FgAI5/9cgjBTxsYT17cEmGQ
+         6+78nCU4/fLapcUoV7GpK9UHkxD2jcqrHa0je7aETlG5BH9R3uWs83ZFbNgMpJ/tLsVi
+         jFFSc2kx2cW0vs+gKD48FtNXDZhanRl9TJ09mA6gaKxB1NFQ6DpeeD9JlcAzTJuh3zVe
+         bDw8R7QWJOM8I6m69j4fngs6je/WGmRqyaetq0+/dZmTr59NcI+lt0IRg4YLS+2lqDI6
+         S6uHjk4+jMH3tKbMRJVEgzU3bQJZxyR7v/5Fq3k4lMsF/jse0h9+rXXFagLPrVeE3tuU
+         iWgg==
+X-Gm-Message-State: AOAM532WwX1Bgcn+DHKApy4qjKFL6Pdq9t8FBeIASJBP/xc0M47Hzdbh HFosqwZSow16f6k4590rWsqlm2GoCUGEmyfM
+X-Google-Smtp-Source: ABdhPJy0wRZA2aV2CpvHJNvFGqT6DvS4PoPXeru+8/LeAqd4tq7pPvggzWtzy5yKL/d1ek+KExzyBg==
+X-Received: by 2002:a1c:2784:0:b0:392:b4f9:c6ef with SMTP id n126-20020a1c2784000000b00392b4f9c6efmr30555200wmn.201.1651152811006;
+        Thu, 28 Apr 2022 06:33:31 -0700 (PDT)
+Return-Path: <vincent@opaal.io>
+Received: from Pitch.guest (laubervilliers-656-1-49-132.w193-252.abo.wanadoo.fr. [193.252.200.132])
+        by smtp.gmail.com with ESMTPSA id v2-20020adf8b42000000b0020aa790a258sm17079529wra.8.2022.04.28.06.33.30
+        for <vpichery@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Apr 2022 06:33:30 -0700 (PDT)
+From: Administrator <vincent@opaal.io>
+X-Google-Original-From: "Administrator" <admin@opaal.io>
+MIME-Version: 1.0
+Message-Id: <838982445046789.1651152621.937455415725708-openerp-3-mdp.acquereur@Pitch>
+Subject: Bien qui peuvent etre cool dans ton agence Saint Rémy de Provence
+Reply-To: Administrator <admin@opaal.io>
+To: Pichery <vpichery@gmail.com>
+Date: Thu, 28 Apr 2022 13:33:29 -0000
+Content-Type: multipart/mixed; boundary="===============6618497361173135074=="
+
+--===============6618497361173135074==
+Content-Type: multipart/alternative; boundary="===============5116539355253161527=="
+
+--===============5116539355253161527==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+
+--===============5116539355253161527==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+96
+
+
+p {
+margin: 10px 0;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+display: block;
+margin: 0;
+padding: 0;
+}
+img,
+a img {
+border: 0;
+height: auto;
+outline: none;
+text-decoration: none;
+}
+body,
+#bodyTable,
+#bodyCell {
+height: 100%;
+margin: 0;
+padding: 0;
+width: 100%;
+}
+.mcnPreviewText {
+display: none !important;
+}
+#outlook a {
+padding: 0;
+}
+img {
+-ms-interpolation-mode: bicubic;
+}
+table {
+mso-table-lspace: 0pt;
+mso-table-rspace: 0pt;
+}
+.ReadMsgBody {
+width: 100%;
+}
+.ExternalClass {
+width: 100%;
+}
+p,
+a,
+li,
+td,
+blockquote {
+mso-line-height-rule: exactly;
+}
+a[href^=3Dtel],
+a[href^=3Dsms] {
+color: inherit;
+cursor: default;
+text-decoration: none;
+}
+p,
+a,
+li,
+td,
+body,
+table,
+blockquote {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+}
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass td,
+.ExternalClass div,
+.ExternalClass span,
+.ExternalClass font {
+line-height: 100%;
+}
+a[x-apple-data-detectors] {
+color: inherit !important;
+text-decoration: none !important;
+font-size: inherit !important;
+font-family: inherit !important;
+font-weight: inherit !important;
+line-height: inherit !important;
+}
+#bodyCell {
+padding: 10px;
+}
+.templateContainer {
+max-width: 600px !important;
+}
+a.mcnButton {
+display: block;
+}
+.mcnImage,
+.mcnRetinaImage {
+vertical-align: bottom;
+}
+.mcnTextContent {
+word-break: break-word;
+}
+.mcnTextContent img {
+height: auto !important;
+}
+.mcnDividerBlock {
+table-layout: fixed !important;
+}
+<!--
+@tab Page
+@section Background Style
+@tip Set the background color and top border for your email. You may want t=
+o choose colors that match your company's branding.
+-->
+body,
+#bodyTable {
+<!--@editable-->
+background-color: #FAFAFA;
+}
+<!--
+@tab Page
+@section Background Style
+@tip Set the background color and top border for your email. You may want t=
+o choose colors that match your company's branding.
+-->
+#bodyCell {
+<!--@editable-->
+border-top: 0;
+}
+<!--
+@tab Page
+@section Email Border
+@tip Set the border for your email.
+-->
+.templateContainer {
+<!--@editable-->
+border: 0;
+}
+<!--
+@tab Page
+@section Heading 1
+@tip Set the styling for all first-level headings in your emails. These sho=
+uld be the largest of your headings.
+@style heading 1
+-->
+h1 {
+<!--@editable-->
+color: #202020;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 26px;
+<!--@editable-->
+font-style: normal;
+<!--@editable-->
+font-weight: bold;
+<!--@editable-->
+line-height: 125%;
+<!--@editable-->
+letter-spacing: normal;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Page
+@section Heading 2
+@tip Set the styling for all second-level headings in your emails.
+@style heading 2
+-->
+h2 {
+<!--@editable-->
+color: #202020;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 22px;
+<!--@editable-->
+font-style: normal;
+<!--@editable-->
+font-weight: bold;
+<!--@editable-->
+line-height: 125%;
+<!--@editable-->
+letter-spacing: normal;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Page
+@section Heading 3
+@tip Set the styling for all third-level headings in your emails.
+@style heading 3
+-->
+h3 {
+<!--@editable-->
+color: #202020;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 20px;
+<!--@editable-->
+font-style: normal;
+<!--@editable-->
+font-weight: bold;
+<!--@editable-->
+line-height: 125%;
+<!--@editable-->
+letter-spacing: normal;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Page
+@section Heading 4
+@tip Set the styling for all fourth-level headings in your emails. These sh=
+ould be the smallest of your headings.
+@style heading 4
+-->
+h4 {
+<!--@editable-->
+color: #202020;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 18px;
+<!--@editable-->
+font-style: normal;
+<!--@editable-->
+font-weight: bold;
+<!--@editable-->
+line-height: 125%;
+<!--@editable-->
+letter-spacing: normal;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Preheader
+@section Preheader Style
+@tip Set the background color and borders for your email's preheader area.
+-->
+#templatePreheader {
+<!--@editable-->
+background-color: #FAFAFA;
+<!--@editable-->
+background-image: none;
+<!--@editable-->
+background-repeat: no-repeat;
+<!--@editable-->
+background-position: center;
+<!--@editable-->
+background-size: cover;
+<!--@editable-->
+border-top: 0;
+<!--@editable-->
+border-bottom: 0;
+<!--@editable-->
+padding-top: 9px;
+<!--@editable-->
+padding-bottom: 9px;
+}
+<!--
+@tab Preheader
+@section Preheader Text
+@tip Set the styling for your email's preheader text. Choose a size and col=
+or that is easy to read.
+-->
+#templatePreheader .mcnTextContent,
+#templatePreheader .mcnTextContent p {
+<!--@editable-->
+color: #656565;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 12px;
+<!--@editable-->
+line-height: 150%;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Preheader
+@section Preheader Link
+@tip Set the styling for your email's preheader links. Choose a color that =
+helps them stand out from your text.
+-->
+#templatePreheader .mcnTextContent a,
+#templatePreheader .mcnTextContent p a {
+<!--@editable-->
+color: #656565;
+<!--@editable-->
+font-weight: normal;
+<!--@editable-->
+text-decoration: underline;
+}
+<!--
+@tab Header
+@section Header Style
+@tip Set the background color and borders for your email's header area.
+-->
+#templateHeader {
+<!--@editable-->
+background-color: #FFFFFF;
+<!--@editable-->
+background-image: none;
+<!--@editable-->
+background-repeat: no-repeat;
+<!--@editable-->
+background-position: center;
+<!--@editable-->
+background-size: cover;
+<!--@editable-->
+border-top: 0;
+<!--@editable-->
+border-bottom: 0;
+<!--@editable-->
+padding-top: 9px;
+<!--@editable-->
+padding-bottom: 0;
+}
+<!--
+@tab Header
+@section Header Text
+@tip Set the styling for your email's header text. Choose a size and color =
+that is easy to read.
+-->
+#templateHeader .mcnTextContent,
+#templateHeader .mcnTextContent p {
+<!--@editable-->
+color: #202020;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 16px;
+<!--@editable-->
+line-height: 150%;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Header
+@section Header Link
+@tip Set the styling for your email's header links. Choose a color that hel=
+ps them stand out from your text.
+-->
+#templateHeader .mcnTextContent a,
+#templateHeader .mcnTextContent p a {
+<!--@editable-->
+color: #007C89;
+<!--@editable-->
+font-weight: normal;
+<!--@editable-->
+text-decoration: underline;
+}
+<!--
+@tab Body
+@section Body Style
+@tip Set the background color and borders for your email's body area.
+-->
+#templateBody {
+<!--@editable-->
+background-color: #FFFFFF;
+<!--@editable-->
+background-image: none;
+<!--@editable-->
+background-repeat: no-repeat;
+<!--@editable-->
+background-position: center;
+<!--@editable-->
+background-size: cover;
+<!--@editable-->
+border-top: 0;
+<!--@editable-->
+border-bottom: 2px solid #EAEAEA;
+<!--@editable-->
+padding-top: 0;
+<!--@editable-->
+padding-bottom: 9px;
+}
+<!--
+@tab Body
+@section Body Text
+@tip Set the styling for your email's body text. Choose a size and color th=
+at is easy to read.
+-->
+#templateBody .mcnTextContent,
+#templateBody .mcnTextContent p {
+<!--@editable-->
+color: #202020;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 16px;
+<!--@editable-->
+line-height: 150%;
+<!--@editable-->
+text-align: left;
+}
+<!--
+@tab Body
+@section Body Link
+@tip Set the styling for your email's body links. Choose a color that helps=
+ them stand out from your text.
+-->
+#templateBody .mcnTextContent a,
+#templateBody .mcnTextContent p a {
+<!--@editable-->
+color: #007C89;
+<!--@editable-->
+font-weight: normal;
+<!--@editable-->
+text-decoration: underline;
+}
+<!--
+@tab Footer
+@section Footer Style
+@tip Set the background color and borders for your email's footer area.
+-->
+#templateFooter {
+<!--@editable-->
+background-color: #FAFAFA;
+<!--@editable-->
+background-image: none;
+<!--@editable-->
+background-repeat: no-repeat;
+<!--@editable-->
+background-position: center;
+<!--@editable-->
+background-size: cover;
+<!--@editable-->
+border-top: 0;
+<!--@editable-->
+border-bottom: 0;
+<!--@editable-->
+padding-top: 9px;
+<!--@editable-->
+padding-bottom: 9px;
+}
+<!--
+@tab Footer
+@section Footer Text
+@tip Set the styling for your email's footer text. Choose a size and color =
+that is easy to read.
+-->
+#templateFooter .mcnTextContent,
+#templateFooter .mcnTextContent p {
+<!--@editable-->
+color: #656565;
+<!--@editable-->
+font-family: Helvetica;
+<!--@editable-->
+font-size: 12px;
+<!--@editable-->
+line-height: 150%;
+<!--@editable-->
+text-align: center;
+}
+<!--
+@tab Footer
+@section Footer Link
+@tip Set the styling for your email's footer links. Choose a color that hel=
+ps them stand out from your text.
+-->
+#templateFooter .mcnTextContent a,
+#templateFooter .mcnTextContent p a {
+<!--@editable-->
+color: #656565;
+<!--@editable-->
+font-weight: normal;
+<!--@editable-->
+text-decoration: underline;
+}
+@media only screen and (min-width:768px) {
+.templateContainer {
+width: 600px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+body,
+table,
+td,
+p,
+a,
+li,
+blockquote {
+-webkit-text-size-adjust: none !important;
+}
+}
+@media only screen and (max-width: 480px) {
+body {
+width: 100% !important;
+min-width: 100% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnRetinaImage {
+max-width: 100% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImage {
+width: 100% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnCartContainer,
+.mcnCaptionTopContent,
+.mcnRecContentContainer,
+.mcnCaptionBottomContent,
+.mcnTextContentContainer,
+.mcnBoxedTextContentContainer,
+.mcnImageGroupContentContainer,
+.mcnCaptionLeftTextContentContainer,
+.mcnCaptionRightTextContentContainer,
+.mcnCaptionLeftImageContentContainer,
+.mcnCaptionRightImageContentContainer,
+.mcnImageCardLeftTextContentContainer,
+.mcnImageCardRightTextContentContainer,
+.mcnImageCardLeftImageContentContainer,
+.mcnImageCardRightImageContentContainer {
+max-width: 100% !important;
+width: 100% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnBoxedTextContentContainer {
+min-width: 100% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImageGroupContent {
+padding: 9px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnCaptionLeftContentOuter .mcnTextContent,
+.mcnCaptionRightContentOuter .mcnTextContent {
+padding-top: 9px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImageCardTopImageContent,
+.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,
+.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent {
+padding-top: 18px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImageCardBottomImageContent {
+padding-bottom: 9px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImageGroupBlockInner {
+padding-top: 0 !important;
+padding-bottom: 0 !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImageGroupBlockOuter {
+padding-top: 9px !important;
+padding-bottom: 9px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnTextContent,
+.mcnBoxedTextContentColumn {
+padding-right: 18px !important;
+padding-left: 18px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcnImageCardLeftImageContent,
+.mcnImageCardRightImageContent {
+padding-right: 18px !important;
+padding-bottom: 0 !important;
+padding-left: 18px !important;
+}
+}
+@media only screen and (max-width: 480px) {
+.mcpreview-image-uploader {
+display: none !important;
+width: 100% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Heading 1
+@tip Make the first-level headings larger in size for better readability on=
+ small screens.
+-->
+h1 {
+<!--@editable-->
+font-size: 22px !important;
+<!--@editable-->
+line-height: 125% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Heading 2
+@tip Make the second-level headings larger in size for better readability o=
+n small screens.
+-->
+h2 {
+<!--@editable-->
+font-size: 20px !important;
+<!--@editable-->
+line-height: 125% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Heading 3
+@tip Make the third-level headings larger in size for better readability on=
+ small screens.
+-->
+h3 {
+<!--@editable-->
+font-size: 18px !important;
+<!--@editable-->
+line-height: 125% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Heading 4
+@tip Make the fourth-level headings larger in size for better readability o=
+n small screens.
+-->
+h4 {
+<!--@editable-->
+font-size: 16px !important;
+<!--@editable-->
+line-height: 150% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Boxed Text
+@tip Make the boxed text larger in size for better readability on small scr=
+eens. We recommend a font size of at least 16px.
+-->
+.mcnBoxedTextContentContainer .mcnTextContent,
+.mcnBoxedTextContentContainer .mcnTextContent p {
+<!--@editable-->
+font-size: 14px !important;
+<!--@editable-->
+line-height: 150% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Preheader Visibility
+@tip Set the visibility of the email's preheader on small screens. You can =
+hide it to save space.
+-->
+#templatePreheader {
+<!--@editable-->
+display: block !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Preheader Text
+@tip Make the preheader text larger in size for better readability on small=
+ screens.
+-->
+#templatePreheader .mcnTextContent,
+#templatePreheader .mcnTextContent p {
+<!--@editable-->
+font-size: 14px !important;
+<!--@editable-->
+line-height: 150% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Header Text
+@tip Make the header text larger in size for better readability on small sc=
+reens.
+-->
+#templateHeader .mcnTextContent,
+#templateHeader .mcnTextContent p {
+<!--@editable-->
+font-size: 16px !important;
+<!--@editable-->
+line-height: 150% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Body Text
+@tip Make the body text larger in size for better readability on small scre=
+ens. We recommend a font size of at least 16px.
+-->
+#templateBody .mcnTextContent,
+#templateBody .mcnTextContent p {
+<!--@editable-->
+font-size: 16px !important;
+<!--@editable-->
+line-height: 150% !important;
+}
+}
+@media only screen and (max-width: 480px) {
+<!--
+@tab Mobile Styles
+@section Footer Text
+@tip Make the footer content text larger in size for better readability on =
+small screens.
+-->
+#templateFooter .mcnTextContent,
+#templateFooter .mcnTextContent p {
+<!--@editable-->
+font-size: 14px !important;
+<!--@editable-->
+line-height: 150% !important;
+}
+}
+
+*|MC_PREVIEW_TEXT|* -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bonjour
+Vincent
+Pichery
+Certaines
+maisons dans notre portefeuille de biens
+peuvent correspondre =C3=A0 votre recherche et
+nous vous prions de bien vouloir les trouver
+ci dessous.
+
+N'h=C3=A9sitez
+pas =C3=A0 revenir vers nous pour discuter plus
+en d=C3=A9tails de votre projet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Villa contemporaine =C3=A0 Eygali=C3=A8res
+
+
+Ref :
+sr224vm
+370 m=C2=B2
+4000.0 m=C2=B2
+5
+4
+0
+Dpe : C
+2660000.0 =E2=82=AC
+Honoraires =C3=A0 la charge du vendeur
+
+
+
+
+
+
+
+
+
+
+
+Je
+d=C3=A9couvre le bien [1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Maison de village avec piscine =C3=A0 vendre =C3=A0 Maussane les Alpilles
+
+
+Ref :
+SR001vm
+213 m=C2=B2
+509.0 m=C2=B2
+4
+1
+2
+Dpe : C
+1852000.0 =E2=82=AC
+Honoraires =C3=A0 la charge du vendeur
+
+
+
+
+
+
+
+
+
+
+
+Je
+d=C3=A9couvre le bien [2]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mas du 20=C3=A8me si=C3=A8cle avec piscine =C3=A0 vendre =C3=A0 Barbentane
+
+
+Ref :
+SR656vm
+332 m=C2=B2
+16526.0 m=C2=B2
+4
+2
+0
+Dpe : C
+1588600.0 =E2=82=AC
+Honoraires =C3=A0 la charge du vendeur
+
+
+
+
+
+
+
+
+
+
+
+Je
+d=C3=A9couvre le bien [3]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Et si on faisait le
+point sur votre recherche
+?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[4]
+
+
+
+
+
+
+
+[5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Votre
+contact privil=C3=A9gi=C3=A9
+Romain
+Bouvard
+contact@janssensimmobilier.com
++ 33 7 82 77 09 47
+SARL Janssens Alpilles
+33 Boulevard Victor Hugo
+ST REMY DE PROVENCE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+www.janssens-immobilier.com
+
+Want to change how you receive these emails?
+You can update your
+preferences [6] or unsubscribe
+from this list [7] .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1] https://janssens-immobilier.com/fr/propriete/janssens/sr224vm
+[2] https://janssens-immobilier.com/fr/propriete/janssens/sr001vm
+[3] https://janssens-immobilier.com/fr/propriete/janssens/sr656vm
+[4] mailto:info@janssensimmobilier.com?subject=3Dje%20fais%20le%20point%20s=
+ur%20ma%20recherche&body=3DJe%20d%C3%A9taille%20ma%20recherche%20en%20quelq=
+ues%20lignes
+[5] mailto:info@janssensimmobilier.com?subject=3DJe%20ne%20suis%20plus%20en=
+%20recherche%20d'achat&body=3DJe%20ne%20souhaite%20plus%20recevoir%20d'offr=
+es%20de%20votre%20agence
+[6] *|UPDATE_PROFILE|*
+[7] *|UNSUB|*
+
+--===============5116539355253161527==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<div style=3D"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helveti=
+ca, Verdana, Arial, sans-serif;">
+                    <!-- NAME: 1 COLUMN -->
+                    <!--[if gte mso 15]>
+                        <xml>
+                            <o:OfficeDocumentSettings>
+                            <o:AllowPNG></o:AllowPNG>
+                            <o:PixelsPerInch>96</o:PixelsPerInch>
+                            </o:OfficeDocumentSettings>
+                        </xml>
+                        <![endif]-->
+                        <style type=3D"text/css">
+                            p {
+                                margin: 10px 0;
+                                padding: 0;
+                            }
+
+                            table {
+                                border-collapse: collapse;
+                            }
+
+                            h1,
+                            h2,
+                            h3,
+                            h4,
+                            h5,
+                            h6 {
+                                display: block;
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            img,
+                            a img {
+                                border: 0;
+                                height: auto;
+                                outline: none;
+                                text-decoration: none;
+                            }
+
+                            body,
+                            #bodyTable,
+                            #bodyCell {
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                            }
+
+                            .mcnPreviewText {
+                                display: none !important;
+                            }
+
+                            #outlook a {
+                                padding: 0;
+                            }
+
+                            img {
+                                -ms-interpolation-mode: bicubic;
+                            }
+
+                            table {
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                            }
+
+                            .ReadMsgBody {
+                                width: 100%;
+                            }
+
+                            .ExternalClass {
+                                width: 100%;
+                            }
+
+                            p,
+                            a,
+                            li,
+                            td,
+                            blockquote {
+                                mso-line-height-rule: exactly;
+                            }
+
+                            a[href^=3Dtel],
+                            a[href^=3Dsms] {
+                                color: inherit;
+                                cursor: default;
+                                text-decoration: none;
+                            }
+
+                            p,
+                            a,
+                            li,
+                            td,
+                            body,
+                            table,
+                            blockquote {
+                                -ms-text-size-adjust: 100%;
+                                -webkit-text-size-adjust: 100%;
+                            }
+
+                            .ExternalClass,
+                            .ExternalClass p,
+                            .ExternalClass td,
+                            .ExternalClass div,
+                            .ExternalClass span,
+                            .ExternalClass font {
+                                line-height: 100%;
+                            }
+
+                            a[x-apple-data-detectors] {
+                                color: inherit !important;
+                                text-decoration: none !important;
+                                font-size: inherit !important;
+                                font-family: inherit !important;
+                                font-weight: inherit !important;
+                                line-height: inherit !important;
+                            }
+
+                            #bodyCell {
+                                padding: 10px;
+                            }
+
+                            .templateContainer {
+                                max-width: 600px !important;
+                            }
+
+                            a.mcnButton {
+                                display: block;
+                            }
+
+                            .mcnImage,
+                            .mcnRetinaImage {
+                                vertical-align: bottom;
+                            }
+
+                            .mcnTextContent {
+                                word-break: break-word;
+                            }
+
+                            .mcnTextContent img {
+                                height: auto !important;
+                            }
+
+                            .mcnDividerBlock {
+                                table-layout: fixed !important;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Background Style
+                            @tip Set the background color and top border fo=
+r your email. You may want to choose colors that match your company's brand=
+ing.
+                            -->
+                            body,
+                            #bodyTable {
+                                <!--@editable-->
+                                background-color: #FAFAFA;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Background Style
+                            @tip Set the background color and top border fo=
+r your email. You may want to choose colors that match your company's brand=
+ing.
+                            -->
+                            #bodyCell {
+                                <!--@editable-->
+                                border-top: 0;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Email Border
+                            @tip Set the border for your email.
+                            -->
+                            .templateContainer {
+                                <!--@editable-->
+                                border: 0;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Heading 1
+                            @tip Set the styling for all first-level headin=
+gs in your emails. These should be the largest of your headings.
+                            @style heading 1
+                            -->
+                            h1 {
+                                <!--@editable-->
+                                color: #202020;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 26px;
+                                <!--@editable-->
+                                font-style: normal;
+                                <!--@editable-->
+                                font-weight: bold;
+                                <!--@editable-->
+                                line-height: 125%;
+                                <!--@editable-->
+                                letter-spacing: normal;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Heading 2
+                            @tip Set the styling for all second-level headi=
+ngs in your emails.
+                            @style heading 2
+                            -->
+                            h2 {
+                                <!--@editable-->
+                                color: #202020;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 22px;
+                                <!--@editable-->
+                                font-style: normal;
+                                <!--@editable-->
+                                font-weight: bold;
+                                <!--@editable-->
+                                line-height: 125%;
+                                <!--@editable-->
+                                letter-spacing: normal;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Heading 3
+                            @tip Set the styling for all third-level headin=
+gs in your emails.
+                            @style heading 3
+                            -->
+                            h3 {
+                                <!--@editable-->
+                                color: #202020;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 20px;
+                                <!--@editable-->
+                                font-style: normal;
+                                <!--@editable-->
+                                font-weight: bold;
+                                <!--@editable-->
+                                line-height: 125%;
+                                <!--@editable-->
+                                letter-spacing: normal;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Page
+                            @section Heading 4
+                            @tip Set the styling for all fourth-level headi=
+ngs in your emails. These should be the smallest of your headings.
+                            @style heading 4
+                            -->
+                            h4 {
+                                <!--@editable-->
+                                color: #202020;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 18px;
+                                <!--@editable-->
+                                font-style: normal;
+                                <!--@editable-->
+                                font-weight: bold;
+                                <!--@editable-->
+                                line-height: 125%;
+                                <!--@editable-->
+                                letter-spacing: normal;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Preheader
+                            @section Preheader Style
+                            @tip Set the background color and borders for y=
+our email's preheader area.
+                            -->
+                            #templatePreheader {
+                                <!--@editable-->
+                                background-color: #FAFAFA;
+                                <!--@editable-->
+                                background-image: none;
+                                <!--@editable-->
+                                background-repeat: no-repeat;
+                                <!--@editable-->
+                                background-position: center;
+                                <!--@editable-->
+                                background-size: cover;
+                                <!--@editable-->
+                                border-top: 0;
+                                <!--@editable-->
+                                border-bottom: 0;
+                                <!--@editable-->
+                                padding-top: 9px;
+                                <!--@editable-->
+                                padding-bottom: 9px;
+                            }
+
+                            <!--
+                            @tab Preheader
+                            @section Preheader Text
+                            @tip Set the styling for your email's preheader=
+ text. Choose a size and color that is easy to read.
+                            -->
+                            #templatePreheader .mcnTextContent,
+                            #templatePreheader .mcnTextContent p {
+                                <!--@editable-->
+                                color: #656565;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 12px;
+                                <!--@editable-->
+                                line-height: 150%;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Preheader
+                            @section Preheader Link
+                            @tip Set the styling for your email's preheader=
+ links. Choose a color that helps them stand out from your text.
+                            -->
+                            #templatePreheader .mcnTextContent a,
+                            #templatePreheader .mcnTextContent p a {
+                                <!--@editable-->
+                                color: #656565;
+                                <!--@editable-->
+                                font-weight: normal;
+                                <!--@editable-->
+                                text-decoration: underline;
+                            }
+
+                            <!--
+                            @tab Header
+                            @section Header Style
+                            @tip Set the background color and borders for y=
+our email's header area.
+                            -->
+                            #templateHeader {
+                                <!--@editable-->
+                                background-color: #FFFFFF;
+                                <!--@editable-->
+                                background-image: none;
+                                <!--@editable-->
+                                background-repeat: no-repeat;
+                                <!--@editable-->
+                                background-position: center;
+                                <!--@editable-->
+                                background-size: cover;
+                                <!--@editable-->
+                                border-top: 0;
+                                <!--@editable-->
+                                border-bottom: 0;
+                                <!--@editable-->
+                                padding-top: 9px;
+                                <!--@editable-->
+                                padding-bottom: 0;
+                            }
+
+                            <!--
+                            @tab Header
+                            @section Header Text
+                            @tip Set the styling for your email's header te=
+xt. Choose a size and color that is easy to read.
+                            -->
+                            #templateHeader .mcnTextContent,
+                            #templateHeader .mcnTextContent p {
+                                <!--@editable-->
+                                color: #202020;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 16px;
+                                <!--@editable-->
+                                line-height: 150%;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Header
+                            @section Header Link
+                            @tip Set the styling for your email's header li=
+nks. Choose a color that helps them stand out from your text.
+                            -->
+                            #templateHeader .mcnTextContent a,
+                            #templateHeader .mcnTextContent p a {
+                                <!--@editable-->
+                                color: #007C89;
+                                <!--@editable-->
+                                font-weight: normal;
+                                <!--@editable-->
+                                text-decoration: underline;
+                            }
+
+                            <!--
+                            @tab Body
+                            @section Body Style
+                            @tip Set the background color and borders for y=
+our email's body area.
+                            -->
+                            #templateBody {
+                                <!--@editable-->
+                                background-color: #FFFFFF;
+                                <!--@editable-->
+                                background-image: none;
+                                <!--@editable-->
+                                background-repeat: no-repeat;
+                                <!--@editable-->
+                                background-position: center;
+                                <!--@editable-->
+                                background-size: cover;
+                                <!--@editable-->
+                                border-top: 0;
+                                <!--@editable-->
+                                border-bottom: 2px solid #EAEAEA;
+                                <!--@editable-->
+                                padding-top: 0;
+                                <!--@editable-->
+                                padding-bottom: 9px;
+                            }
+
+                            <!--
+                            @tab Body
+                            @section Body Text
+                            @tip Set the styling for your email's body text=
+. Choose a size and color that is easy to read.
+                            -->
+                            #templateBody .mcnTextContent,
+                            #templateBody .mcnTextContent p {
+                                <!--@editable-->
+                                color: #202020;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 16px;
+                                <!--@editable-->
+                                line-height: 150%;
+                                <!--@editable-->
+                                text-align: left;
+                            }
+
+                            <!--
+                            @tab Body
+                            @section Body Link
+                            @tip Set the styling for your email's body link=
+s. Choose a color that helps them stand out from your text.
+                            -->
+                            #templateBody .mcnTextContent a,
+                            #templateBody .mcnTextContent p a {
+                                <!--@editable-->
+                                color: #007C89;
+                                <!--@editable-->
+                                font-weight: normal;
+                                <!--@editable-->
+                                text-decoration: underline;
+                            }
+
+                            <!--
+                            @tab Footer
+                            @section Footer Style
+                            @tip Set the background color and borders for y=
+our email's footer area.
+                            -->
+                            #templateFooter {
+                                <!--@editable-->
+                                background-color: #FAFAFA;
+                                <!--@editable-->
+                                background-image: none;
+                                <!--@editable-->
+                                background-repeat: no-repeat;
+                                <!--@editable-->
+                                background-position: center;
+                                <!--@editable-->
+                                background-size: cover;
+                                <!--@editable-->
+                                border-top: 0;
+                                <!--@editable-->
+                                border-bottom: 0;
+                                <!--@editable-->
+                                padding-top: 9px;
+                                <!--@editable-->
+                                padding-bottom: 9px;
+                            }
+
+                            <!--
+                            @tab Footer
+                            @section Footer Text
+                            @tip Set the styling for your email's footer te=
+xt. Choose a size and color that is easy to read.
+                            -->
+                            #templateFooter .mcnTextContent,
+                            #templateFooter .mcnTextContent p {
+                                <!--@editable-->
+                                color: #656565;
+                                <!--@editable-->
+                                font-family: Helvetica;
+                                <!--@editable-->
+                                font-size: 12px;
+                                <!--@editable-->
+                                line-height: 150%;
+                                <!--@editable-->
+                                text-align: center;
+                            }
+
+                            <!--
+                            @tab Footer
+                            @section Footer Link
+                            @tip Set the styling for your email's footer li=
+nks. Choose a color that helps them stand out from your text.
+                            -->
+                            #templateFooter .mcnTextContent a,
+                            #templateFooter .mcnTextContent p a {
+                                <!--@editable-->
+                                color: #656565;
+                                <!--@editable-->
+                                font-weight: normal;
+                                <!--@editable-->
+                                text-decoration: underline;
+                            }
+
+                            @media only screen and (min-width:768px) {
+                                .templateContainer {
+                                    width: 600px !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                body,
+                                table,
+                                td,
+                                p,
+                                a,
+                                li,
+                                blockquote {
+                                    -webkit-text-size-adjust: none !importa=
+nt;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                body {
+                                    width: 100% !important;
+                                    min-width: 100% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .mcnRetinaImage {
+                                    max-width: 100% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .mcnImage {
+                                    width: 100% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                .mcnCartContainer,
+                                .mcnCaptionTopContent,
+                                .mcnRecContentContainer,
+                                .mcnCaptionBottomContent,
+                                .mcnTextContentContainer,
+                                .mcnBoxedTextContentContainer,
+                                .mcnImageGroupContentContainer,
+                                .mcnCaptionLeftTextContentContainer,
+                                .mcnCaptionRightTextContentContainer,
+                                .mcnCaptionLeftImageContentContainer,
+                                .mcnCaptionRightImageContentContainer,
+                                .mcnImageCardLeftTextContentContainer,
+                                .mcnImageCardRightTextContentContainer,
+                                .mcnImageCardLeftImageContentContainer,
+                                .mcnImageCardRightImageContentContainer {
+                                    max-width: 100% !important;
+                                    width: 100% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .mcnBoxedTextContentContainer {
+                                    min-width: 100% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .mcnImageGroupContent {
+                                    padding: 9px !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                .mcnCaptionLeftContentOuter .mcnTextContent=
+,
+                                .mcnCaptionRightContentOuter .mcnTextConten=
+t {
+                                    padding-top: 9px !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                .mcnImageCardTopImageContent,
+                                .mcnCaptionBottomContent:last-child .mcnCap=
+tionBottomImageContent,
+                                .mcnCaptionBlockInner .mcnCaptionTopContent=
+:last-child .mcnTextContent {
+                                    padding-top: 18px !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .mcnImageCardBottomImageContent {
+                                    padding-bottom: 9px !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .mcnImageGroupBlockInner {
+                                    padding-top: 0 !important;
+                                    padding-bottom: 0 !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                .mcnImageGroupBlockOuter {
+                                    padding-top: 9px !important;
+                                    padding-bottom: 9px !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                .mcnTextContent,
+                                .mcnBoxedTextContentColumn {
+                                    padding-right: 18px !important;
+                                    padding-left: 18px !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                .mcnImageCardLeftImageContent,
+                                .mcnImageCardRightImageContent {
+                                    padding-right: 18px !important;
+                                    padding-bottom: 0 !important;
+                                    padding-left: 18px !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                .mcpreview-image-uploader {
+                                    display: none !important;
+                                    width: 100% !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                <!--
+                            @tab Mobile Styles
+                            @section Heading 1
+                            @tip Make the first-level headings larger in si=
+ze for better readability on small screens.
+                            -->
+                                h1 {
+                                    <!--@editable-->
+                                    font-size: 22px !important;
+                                    <!--@editable-->
+                                    line-height: 125% !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                <!--
+                                @tab Mobile Styles
+                                @section Heading 2
+                                @tip Make the second-level headings larger =
+in size for better readability on small screens.
+                                -->
+                                h2 {
+                                    <!--@editable-->
+                                    font-size: 20px !important;
+                                    <!--@editable-->
+                                    line-height: 125% !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                <!--
+                                @tab Mobile Styles
+                                @section Heading 3
+                                @tip Make the third-level headings larger i=
+n size for better readability on small screens.
+                                -->
+                                h3 {
+                                    <!--@editable-->
+                                    font-size: 18px !important;
+                                    <!--@editable-->
+                                    line-height: 125% !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                <!--
+                                @tab Mobile Styles
+                                @section Heading 4
+                                @tip Make the fourth-level headings larger =
+in size for better readability on small screens.
+                                -->
+                                h4 {
+                                    <!--@editable-->
+                                    font-size: 16px !important;
+                                    <!--@editable-->
+                                    line-height: 150% !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                <!--
+                                @tab Mobile Styles
+                                @section Boxed Text
+                                @tip Make the boxed text larger in size for=
+ better readability on small screens. We recommend a font size of at least =
+16px.
+                                -->
+                                .mcnBoxedTextContentContainer .mcnTextConte=
+nt,
+                                .mcnBoxedTextContentContainer .mcnTextConte=
+nt p {
+                                    <!--@editable-->
+                                    font-size: 14px !important;
+                                    <!--@editable-->
+                                    line-height: 150% !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+                                <!--
+                                @tab Mobile Styles
+                                @section Preheader Visibility
+                                @tip Set the visibility of the email's preh=
+eader on small screens. You can hide it to save space.
+                                -->
+                                #templatePreheader {
+                                    <!--@editable-->
+                                    display: block !important;
+                                }
+                            }
+                            @media only screen and (max-width: 480px) {
+
+                                <!--
+                                @tab Mobile Styles
+                                @section Preheader Text
+                                @tip Make the preheader text larger in size=
+ for better readability on small screens.
+                                -->
+                                #templatePreheader .mcnTextContent,
+                                #templatePreheader .mcnTextContent p {
+                                    <!--@editable-->
+                                    font-size: 14px !important;
+                                    <!--@editable-->
+                                    line-height: 150% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                <!--
+                                @tab Mobile Styles
+                                @section Header Text
+                                @tip Make the header text larger in size fo=
+r better readability on small screens.
+                                -->
+                                #templateHeader .mcnTextContent,
+                                #templateHeader .mcnTextContent p {
+                                    <!--@editable-->
+                                    font-size: 16px !important;
+                                    <!--@editable-->
+                                    line-height: 150% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                <!--
+                                @tab Mobile Styles
+                                @section Body Text
+                                @tip Make the body text larger in size for =
+better readability on small screens. We recommend a font size of at least 1=
+6px.
+                                -->
+                                #templateBody .mcnTextContent,
+                                #templateBody .mcnTextContent p {
+                                    <!--@editable-->
+                                    font-size: 16px !important;
+                                    <!--@editable-->
+                                    line-height: 150% !important;
+                                }
+
+                            }
+
+                            @media only screen and (max-width: 480px) {
+
+                                <!--
+                                @tab Mobile Styles
+                                @section Footer Text
+                                @tip Make the footer content text larger in=
+ size for better readability on small screens.
+                                -->
+                                #templateFooter .mcnTextContent,
+                                #templateFooter .mcnTextContent p {
+                                    <!--@editable-->
+                                    font-size: 14px !important;
+                                    <!--@editable-->
+                                    line-height: 150% !important;
+                                }
+
+                            }
+                        </style>
+
+                        <!--*|IF:MC_PREVIEW_TEXT|*-->
+                        <!--[if !gte mso 9]><span class=3D"mcnPreviewText" =
+style=3D"display:none;font-size:0px; line-height:0px; max-height:0px; max-w=
+idth:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|M=
+C_PREVIEW_TEXT|*</span>-->
+                        <!--<![endif]-->
+                        <!--*|END:IF|*-->
+                        <center>
+                            <table align=3D"center" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" height=3D"100%" width=3D"100%" id=3D"bodyTable" s=
+tyle=3D"padding:0px;margin:0px;width:100%;height:100%;text-size-adjust:100%=
+;border-collapse:collapse;">
+                                <tbody><tr>
+                                    <td align=3D"center" valign=3D"top" id=
+=3D"bodyCell" style=3D"padding:10px;margin:0px;width:100%;height:100%;text-=
+size-adjust:100%;">
+                                        <!-- BEGIN TEMPLATE // -->
+                                        <!--[if (gte mso 9)|(IE)]>
+                                            <table align=3D"center" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600px" style=3D"width:6=
+00px;">
+                                            <tr>
+                                            <td align=3D"center" valign=3D"=
+top" width=3D"600px" style=3D"width:600px;">
+                                        <![endif]-->
+                                        <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" width=3D"100%" class=3D"templateContainer" style=3D"ma=
+x-width:600px;text-size-adjust:100%;border-collapse:collapse;">
+                                            <tbody><tr>
+                                                <td valign=3D"top" id=3D"te=
+mplatePreheader" style=3D"text-size-adjust:100%;">
+                                                    <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnTextBlock" styl=
+e=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;">
+                                                        <tbody class=3D"mcn=
+TextBlockOuter">
+                                                            <tr>
+                                                                <td valign=
+=3D"top" class=3D"mcnTextBlockInner" style=3D"text-size-adjust:100%;padding=
+-top:9px;">
+                                                                    <!--[if=
+ mso]>
+                                                                        <ta=
+ble align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" style=3D"width:100%;">
+                                                                        <tr=
+>
+                                                                    <![endi=
+f]-->
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+r>
+                                                                        </t=
+able>
+                                                                    <![endi=
+f]-->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valign=3D"top" id=3D"te=
+mplateHeader" style=3D"text-size-adjust:100%;">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td valign=3D"top" id=3D"te=
+mplateBody" style=3D"text-size-adjust:100%;">
+
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnTextBlock" =
+style=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;"><t=
+body class=3D"mcnTextBlockOuter">
+                                                            <tr>
+                                                                <td valign=
+=3D"top" class=3D"mcnTextBlockInner" style=3D"text-size-adjust:100%;padding=
+-top:9px;">
+                                                                    <!--[if=
+ mso]>
+                                                                        <ta=
+ble align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" style=3D"width:100%;">
+                                                                        <tr=
+>
+                                                                    <![endi=
+f]-->
+
+                                                                    <!--[if=
+ mso]>
+                                                                        <td=
+ valign=3D"top" width=3D"600px" style=3D"width:600px;">
+                                                                    <![endi=
+f]-->
+                                                                    <table =
+align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"te=
+xt-size-adjust:100%;border-collapse:collapse;max-width:100%;min-width:100%;=
+" width=3D"100%" class=3D"mcnTextContentContainer">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+
+                                                                           =
+     <td valign=3D"top" class=3D"mcnTextContent" style=3D"word-break:break-=
+word;text-size-adjust:100%;padding-top:0;padding-right:18px; padding-bottom=
+:9px; padding-left:18px;">
+
+                                                                           =
+         <div style=3D"font-size:13px;font-family:&quot;Lucida Grande&quot;=
+, Helvetica, Verdana, Arial, sans-serif;text-align:center;"><span style=3D"=
+font-family:georgia,times,times new roman,serif"><span style=3D"font-size:1=
+3px">Bonjour</span></span>
+                                                                           =
+             <span style=3D"font-size:13px"><span style=3D"font-family:geor=
+gia,times,times new roman,serif">
+                                                                           =
+                     Vincent
+                                                                           =
+                     Pichery</span></span></div>
+
+                                                                           =
+         <p style=3D"padding:0px;margin:0px;font-size:13px;font-family:&quo=
+t;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;text-size-adju=
+st:100%;text-align:center;"><span style=3D"font-size:13px"><span style=3D"f=
+ont-family:georgia,times,times new roman,serif">Certaines
+                                                                           =
+                     maisons dans notre portefeuille de biens
+                                                                           =
+                     peuvent correspondre =C3=A0 votre recherche et
+                                                                           =
+                     nous vous prions de bien vouloir les trouver
+                                                                           =
+                     ci dessous.</span></span></p>
+
+                                                                           =
+         <p style=3D"padding:0px;margin:0px;font-size:13px;font-family:&quo=
+t;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;text-size-adju=
+st:100%;text-align:center;"><span style=3D"font-size:13px"><span style=3D"f=
+ont-family:georgia,times,times new roman,serif">N'h=C3=A9sitez
+                                                                           =
+                     pas =C3=A0 revenir vers nous pour discuter plus
+                                                                           =
+                     en d=C3=A9tails de votre projet.<br>
+                                                                           =
+                     <img data-file-id=3D"5509262" src=3D"https://mcusercon=
+tent.com/73d56d806fd449c2d661cc012/images/f8923d1c-302c-28af-d0d3-6f83dd1d1=
+8ed.png" style=3D"text-decoration:none;outline-width:initial;outline-style:=
+none;outline-color:initial;height:auto;border-left-width:0px;border-bottom-=
+width:0px;border-right-width:0px;border-top-width:0px;vertical-align:middle=
+;border:0px;width: 30px; height: 30px; margin: 0px;" width=3D"30" height=3D=
+"0"></span></span></p>
+
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+d>
+                                                                    <![endi=
+f]-->
+
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+r>
+                                                                        </t=
+able>
+                                                                    <![endi=
+f]-->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnCaptionBloc=
+k" style=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                            <tbody class=3D=
+"mcnCaptionBlockOuter">
+                                                                <tr>
+                                                                    <td cla=
+ss=3D"mcnCaptionBlockInner" valign=3D"top" style=3D"text-size-adjust:100%;p=
+adding:9px;">
+                                                                        <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnCaptionLef=
+tContentOuter" width=3D"100%" style=3D"text-size-adjust:100%;border-collaps=
+e:collapse;">
+                                                                           =
+ <tbody>
+                                                                           =
+     <tr>
+                                                                           =
+         <td valign=3D"top" class=3D"mcnCaptionLeftContentInner" style=3D"t=
+ext-size-adjust:100%;padding:0 9px;">
+                                                                           =
+             <table align=3D"right" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" class=3D"mcnCaptionLeftImageContentContainer" width=3D"352px" sty=
+le=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+                 <tbody>
+                                                                           =
+                     <tr>
+                                                                           =
+                         <td class=3D"mcnCaptionLeftImageContent" align=3D"=
+center" valign=3D"top" style=3D"text-size-adjust:100%;">
+                                                                           =
+                                 <img src=3D"http://localhost:8069/my/file/=
+58/view?access_token=3Dfb11c9be-a15c-48ca-ba6f-2c862ebd05ae" style=3D"text-=
+decoration:none;outline-width:initial;outline-style:none;outline-color:init=
+ial;height:auto;border-left-width:0px;border-bottom-width:0px;border-right-=
+width:0px;border-top-width:0px;vertical-align:bottom;outline: none; height:=
+ auto; border-width: 0px; vertical-align: bottom; max-width: 352px; width: =
+auto;" class=3D"mcnImage" width=3D"0" height=3D"0">
+                                                                           =
+                         </td>
+                                                                           =
+                     </tr>
+                                                                           =
+                 </tbody>
+                                                                           =
+             </table>
+                                                                           =
+             <table class=3D"mcnCaptionLeftTextContentContainer" align=3D"l=
+eft" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"176px" style=
+=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+                 <tbody>
+                                                                           =
+                     <tr>
+                                                                           =
+                         <td valign=3D"top" class=3D"mcnTextContent" style=
+=3D"word-break:break-word;text-size-adjust:100%;">
+                                                                           =
+                             <span style=3D"font-size:14px"><span style=3D"=
+font-family:georgia,times,times new roman,serif">
+                                                                           =
+                                 Villa contemporaine =C3=A0 Eygali=C3=A8res
+                                                                           =
+                                 </span></span><br>
+                                                                           =
+                             <br>
+                                                                           =
+                             <span style=3D"font-family:georgia,times,times=
+ new roman,serif"><span style=3D"font-size:13px">Ref :
+                                                                           =
+                                     sr224vm<br>
+                                                                           =
+                                     <img data-file-id=3D"5509242" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/6d7740ac-fd8c-4d7=
+3-0373-2b639f7295b9.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px initial;width: 20px; height: 20px; margin: 0px;=
+" width=3D"20" height=3D"0">370 m=C2=B2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509246" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/b5b80629-908c-2f2=
+a-aeca-61517361f7e5.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">4000.0 m=C2=B2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509250" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/7626f4b0-3022-b9a=
+2-7ba5-4ae5fe559155.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">5<br>
+                                                                           =
+                                     <img data-file-id=3D"5509254" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/d0f9a381-c0ba-77d=
+c-19c8-aff2d4c8a354.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">4<br>
+                                                                           =
+                                     <img data-file-id=3D"5509258" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/439771a5-9866-9e8=
+a-85bd-522e52d3d361.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">0<br>
+                                                                           =
+                                     Dpe : C<br>
+                                                                           =
+                                     2660000.0 =E2=82=AC</span></span><br>
+                                                                           =
+                             <span style=3D"font-size:10px"><span style=3D"=
+font-family:georgia,times,times new roman,serif">Honoraires =C3=A0 la charg=
+e du vendeur</span></span>
+                                                                           =
+                         </td>
+                                                                           =
+                     </tr>
+                                                                           =
+                 </tbody>
+                                                                           =
+             </table>
+                                                                           =
+         </td>
+                                                                           =
+     </tr>
+                                                                           =
+ </tbody>
+                                                                        </t=
+able>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnButtonBlock=
+" style=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;">
+                                                            <tbody class=3D=
+"mcnButtonBlockOuter">
+                                                                <tr>
+                                                                    <td sty=
+le=3D"text-size-adjust:100%;padding-top:0;padding-right:18px; padding-botto=
+m:18px; padding-left:18px;" valign=3D"top" align=3D"center" class=3D"mcnBut=
+tonBlockInner">
+                                                                        <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnButtonCont=
+entContainer" style=3D"text-size-adjust:100%;border-collapse:separate !impo=
+rtant;border-radius: 30px;background-color: #315670;">
+                                                                           =
+ <tbody>
+                                                                           =
+     <tr>
+                                                                           =
+         <td align=3D"center" valign=3D"middle" class=3D"mcnButtonContent" =
+style=3D"text-size-adjust:100%;font-family:Georgia, Times, Times New Roman,=
+ serif;font-size: 13px; padding: 14px;">
+                                                                           =
+             <a class=3D"mcnButton " title=3D"Je d=C3=A9couvre le bien" hre=
+f=3D"https://janssens-immobilier.com/fr/propriete/janssens/sr224vm" target=
+=3D"_blank" style=3D"text-size-adjust:100%;background-color:transparent;fon=
+t-weight:normal;letter-spacing: normal;line-height: 100%;text-align: center=
+;text-decoration: none;color: #FFFFFF !important;">Je
+                                                                           =
+                 d=C3=A9couvre le bien</a>
+                                                                           =
+         </td>
+                                                                           =
+     </tr>
+                                                                           =
+ </tbody>
+                                                                        </t=
+able>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnCaptionBloc=
+k" style=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                            <tbody class=3D=
+"mcnCaptionBlockOuter">
+                                                                <tr>
+                                                                    <td cla=
+ss=3D"mcnCaptionBlockInner" valign=3D"top" style=3D"text-size-adjust:100%;p=
+adding:9px;">
+                                                                        <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnCaptionLef=
+tContentOuter" width=3D"100%" style=3D"text-size-adjust:100%;border-collaps=
+e:collapse;">
+                                                                           =
+ <tbody>
+                                                                           =
+     <tr>
+                                                                           =
+         <td valign=3D"top" class=3D"mcnCaptionLeftContentInner" style=3D"t=
+ext-size-adjust:100%;padding:0 9px;">
+                                                                           =
+             <table align=3D"right" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" class=3D"mcnCaptionLeftImageContentContainer" width=3D"352px" sty=
+le=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+                 <tbody>
+                                                                           =
+                     <tr>
+                                                                           =
+                         <td class=3D"mcnCaptionLeftImageContent" align=3D"=
+center" valign=3D"top" style=3D"text-size-adjust:100%;">
+                                                                           =
+                                 <img src=3D"http://localhost:8069/my/file/=
+28/view?access_token=3De273352f-1e56-438e-952b-ec7468172881" style=3D"text-=
+decoration:none;outline-width:initial;outline-style:none;outline-color:init=
+ial;height:auto;border-left-width:0px;border-bottom-width:0px;border-right-=
+width:0px;border-top-width:0px;vertical-align:bottom;outline: none; height:=
+ auto; border-width: 0px; vertical-align: bottom; max-width: 352px; width: =
+auto;" class=3D"mcnImage" width=3D"0" height=3D"0">
+                                                                           =
+                         </td>
+                                                                           =
+                     </tr>
+                                                                           =
+                 </tbody>
+                                                                           =
+             </table>
+                                                                           =
+             <table class=3D"mcnCaptionLeftTextContentContainer" align=3D"l=
+eft" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"176px" style=
+=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+                 <tbody>
+                                                                           =
+                     <tr>
+                                                                           =
+                         <td valign=3D"top" class=3D"mcnTextContent" style=
+=3D"word-break:break-word;text-size-adjust:100%;">
+                                                                           =
+                             <span style=3D"font-size:14px"><span style=3D"=
+font-family:georgia,times,times new roman,serif">
+                                                                           =
+                                 Maison de village avec piscine =C3=A0 vend=
+re =C3=A0 Maussane les Alpilles
+                                                                           =
+                                 </span></span><br>
+                                                                           =
+                             <br>
+                                                                           =
+                             <span style=3D"font-family:georgia,times,times=
+ new roman,serif"><span style=3D"font-size:13px">Ref :
+                                                                           =
+                                     SR001vm<br>
+                                                                           =
+                                     <img data-file-id=3D"5509242" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/6d7740ac-fd8c-4d7=
+3-0373-2b639f7295b9.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px initial;width: 20px; height: 20px; margin: 0px;=
+" width=3D"20" height=3D"0">213 m=C2=B2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509246" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/b5b80629-908c-2f2=
+a-aeca-61517361f7e5.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">509.0 m=C2=B2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509250" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/7626f4b0-3022-b9a=
+2-7ba5-4ae5fe559155.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">4<br>
+                                                                           =
+                                     <img data-file-id=3D"5509254" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/d0f9a381-c0ba-77d=
+c-19c8-aff2d4c8a354.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">1<br>
+                                                                           =
+                                     <img data-file-id=3D"5509258" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/439771a5-9866-9e8=
+a-85bd-522e52d3d361.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">2<br>
+                                                                           =
+                                     Dpe : C<br>
+                                                                           =
+                                     1852000.0 =E2=82=AC</span></span><br>
+                                                                           =
+                             <span style=3D"font-size:10px"><span style=3D"=
+font-family:georgia,times,times new roman,serif">Honoraires =C3=A0 la charg=
+e du vendeur</span></span>
+                                                                           =
+                         </td>
+                                                                           =
+                     </tr>
+                                                                           =
+                 </tbody>
+                                                                           =
+             </table>
+                                                                           =
+         </td>
+                                                                           =
+     </tr>
+                                                                           =
+ </tbody>
+                                                                        </t=
+able>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnButtonBlock=
+" style=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;">
+                                                            <tbody class=3D=
+"mcnButtonBlockOuter">
+                                                                <tr>
+                                                                    <td sty=
+le=3D"text-size-adjust:100%;padding-top:0;padding-right:18px; padding-botto=
+m:18px; padding-left:18px;" valign=3D"top" align=3D"center" class=3D"mcnBut=
+tonBlockInner">
+                                                                        <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnButtonCont=
+entContainer" style=3D"text-size-adjust:100%;border-collapse:separate !impo=
+rtant;border-radius: 30px;background-color: #315670;">
+                                                                           =
+ <tbody>
+                                                                           =
+     <tr>
+                                                                           =
+         <td align=3D"center" valign=3D"middle" class=3D"mcnButtonContent" =
+style=3D"text-size-adjust:100%;font-family:Georgia, Times, Times New Roman,=
+ serif;font-size: 13px; padding: 14px;">
+                                                                           =
+             <a class=3D"mcnButton " title=3D"Je d=C3=A9couvre le bien" hre=
+f=3D"https://janssens-immobilier.com/fr/propriete/janssens/sr001vm" target=
+=3D"_blank" style=3D"text-size-adjust:100%;background-color:transparent;fon=
+t-weight:normal;letter-spacing: normal;line-height: 100%;text-align: center=
+;text-decoration: none;color: #FFFFFF !important;">Je
+                                                                           =
+                 d=C3=A9couvre le bien</a>
+                                                                           =
+         </td>
+                                                                           =
+     </tr>
+                                                                           =
+ </tbody>
+                                                                        </t=
+able>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnCaptionBloc=
+k" style=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                            <tbody class=3D=
+"mcnCaptionBlockOuter">
+                                                                <tr>
+                                                                    <td cla=
+ss=3D"mcnCaptionBlockInner" valign=3D"top" style=3D"text-size-adjust:100%;p=
+adding:9px;">
+                                                                        <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnCaptionLef=
+tContentOuter" width=3D"100%" style=3D"text-size-adjust:100%;border-collaps=
+e:collapse;">
+                                                                           =
+ <tbody>
+                                                                           =
+     <tr>
+                                                                           =
+         <td valign=3D"top" class=3D"mcnCaptionLeftContentInner" style=3D"t=
+ext-size-adjust:100%;padding:0 9px;">
+                                                                           =
+             <table align=3D"right" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" class=3D"mcnCaptionLeftImageContentContainer" width=3D"352px" sty=
+le=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+                 <tbody>
+                                                                           =
+                     <tr>
+                                                                           =
+                         <td class=3D"mcnCaptionLeftImageContent" align=3D"=
+center" valign=3D"top" style=3D"text-size-adjust:100%;">
+                                                                           =
+                                 <img src=3D"http://localhost:8069/my/file/=
+118/view?access_token=3Dcc3b1978-80c1-4cfa-9193-555d524c27b0" style=3D"text=
+-decoration:none;outline-width:initial;outline-style:none;outline-color:ini=
+tial;height:auto;border-left-width:0px;border-bottom-width:0px;border-right=
+-width:0px;border-top-width:0px;vertical-align:bottom;outline: none; height=
+: auto; border-width: 0px; vertical-align: bottom; max-width: 352px; width:=
+ auto;" class=3D"mcnImage" width=3D"0" height=3D"0">
+                                                                           =
+                         </td>
+                                                                           =
+                     </tr>
+                                                                           =
+                 </tbody>
+                                                                           =
+             </table>
+                                                                           =
+             <table class=3D"mcnCaptionLeftTextContentContainer" align=3D"l=
+eft" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"176px" style=
+=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+                 <tbody>
+                                                                           =
+                     <tr>
+                                                                           =
+                         <td valign=3D"top" class=3D"mcnTextContent" style=
+=3D"word-break:break-word;text-size-adjust:100%;">
+                                                                           =
+                             <span style=3D"font-size:14px"><span style=3D"=
+font-family:georgia,times,times new roman,serif">
+                                                                           =
+                                 Mas du 20=C3=A8me si=C3=A8cle avec piscine=
+ =C3=A0 vendre =C3=A0 Barbentane
+                                                                           =
+                                 </span></span><br>
+                                                                           =
+                             <br>
+                                                                           =
+                             <span style=3D"font-family:georgia,times,times=
+ new roman,serif"><span style=3D"font-size:13px">Ref :
+                                                                           =
+                                     SR656vm<br>
+                                                                           =
+                                     <img data-file-id=3D"5509242" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/6d7740ac-fd8c-4d7=
+3-0373-2b639f7295b9.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px initial;width: 20px; height: 20px; margin: 0px;=
+" width=3D"20" height=3D"0">332 m=C2=B2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509246" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/b5b80629-908c-2f2=
+a-aeca-61517361f7e5.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">16526.0 m=C2=B2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509250" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/7626f4b0-3022-b9a=
+2-7ba5-4ae5fe559155.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">4<br>
+                                                                           =
+                                     <img data-file-id=3D"5509254" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/d0f9a381-c0ba-77d=
+c-19c8-aff2d4c8a354.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">2<br>
+                                                                           =
+                                     <img data-file-id=3D"5509258" src=3D"h=
+ttps://mcusercontent.com/73d56d806fd449c2d661cc012/images/439771a5-9866-9e8=
+a-85bd-522e52d3d361.png" style=3D"text-decoration:none;outline-width:initia=
+l;outline-style:none;outline-color:initial;height:auto;border-left-width:0p=
+x;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;verti=
+cal-align:middle;border:0px;width: 20px; height: 20px; margin: 0px;" width=
+=3D"20" height=3D"0">0<br>
+                                                                           =
+                                     Dpe : C<br>
+                                                                           =
+                                     1588600.0 =E2=82=AC</span></span><br>
+                                                                           =
+                             <span style=3D"font-size:10px"><span style=3D"=
+font-family:georgia,times,times new roman,serif">Honoraires =C3=A0 la charg=
+e du vendeur</span></span>
+                                                                           =
+                         </td>
+                                                                           =
+                     </tr>
+                                                                           =
+                 </tbody>
+                                                                           =
+             </table>
+                                                                           =
+         </td>
+                                                                           =
+     </tr>
+                                                                           =
+ </tbody>
+                                                                        </t=
+able>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnButtonBlock=
+" style=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;">
+                                                            <tbody class=3D=
+"mcnButtonBlockOuter">
+                                                                <tr>
+                                                                    <td sty=
+le=3D"text-size-adjust:100%;padding-top:0;padding-right:18px; padding-botto=
+m:18px; padding-left:18px;" valign=3D"top" align=3D"center" class=3D"mcnBut=
+tonBlockInner">
+                                                                        <ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnButtonCont=
+entContainer" style=3D"text-size-adjust:100%;border-collapse:separate !impo=
+rtant;border-radius: 30px;background-color: #315670;">
+                                                                           =
+ <tbody>
+                                                                           =
+     <tr>
+                                                                           =
+         <td align=3D"center" valign=3D"middle" class=3D"mcnButtonContent" =
+style=3D"text-size-adjust:100%;font-family:Georgia, Times, Times New Roman,=
+ serif;font-size: 13px; padding: 14px;">
+                                                                           =
+             <a class=3D"mcnButton " title=3D"Je d=C3=A9couvre le bien" hre=
+f=3D"https://janssens-immobilier.com/fr/propriete/janssens/sr656vm" target=
+=3D"_blank" style=3D"text-size-adjust:100%;background-color:transparent;fon=
+t-weight:normal;letter-spacing: normal;line-height: 100%;text-align: center=
+;text-decoration: none;color: #FFFFFF !important;">Je
+                                                                           =
+                 d=C3=A9couvre le bien</a>
+                                                                           =
+         </td>
+                                                                           =
+     </tr>
+                                                                           =
+ </tbody>
+                                                                        </t=
+able>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnTextBlock" styl=
+e=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;">
+                                                        <tbody class=3D"mcn=
+TextBlockOuter">
+                                                            <tr>
+                                                                <td valign=
+=3D"top" class=3D"mcnTextBlockInner" style=3D"text-size-adjust:100%;padding=
+-top:9px;">
+                                                                    <!--[if=
+ mso]>
+                                                                        <ta=
+ble align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" style=3D"width:100%;">
+                                                                        <tr=
+>
+                                                                    <![endi=
+f]-->
+
+                                                                    <!--[if=
+ mso]>
+                                                                        <td=
+ valign=3D"top" width=3D"600px" style=3D"width:600px;">
+                                                                    <![endi=
+f]-->
+                                                                    <table =
+align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"te=
+xt-size-adjust:100%;border-collapse:collapse;max-width:100%;min-width:100%;=
+" width=3D"100%" class=3D"mcnTextContentContainer">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+
+                                                                           =
+     <td valign=3D"top" class=3D"mcnTextContent" style=3D"word-break:break-=
+word;text-size-adjust:100%;padding-top:0;padding-right:18px; padding-bottom=
+:9px; padding-left:18px;">
+
+                                                                           =
+         <div style=3D"font-size:13px;font-family:&quot;Lucida Grande&quot;=
+, Helvetica, Verdana, Arial, sans-serif;text-align:center;"><span style=3D"=
+font-family:georgia,times,times new roman,serif"><span style=3D"font-size:1=
+4px">Et si on faisait le
+                                                                           =
+                     point sur votre recherche
+                                                                           =
+                     ?</span></span></div>
+
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+d>
+                                                                    <![endi=
+f]-->
+
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+r>
+                                                                        </t=
+able>
+                                                                    <![endi=
+f]-->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnImageGroupBlock=
+" style=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                        <tbody class=3D"mcn=
+ImageGroupBlockOuter">
+
+                                                            <tr>
+                                                                <td valign=
+=3D"top" style=3D"text-size-adjust:100%;padding:9px" class=3D"mcnImageGroup=
+BlockInner">
+
+                                                                    <table =
+align=3D"left" width=3D"273px" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"mcnImageGroupContentContainer" style=3D"text-size-adjust:10=
+0%;border-collapse:collapse;">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+                                                                           =
+     <td class=3D"mcnImageGroupContent" valign=3D"top" style=3D"text-size-a=
+djust:100%;padding-left:9px;padding-top: 0; padding-bottom: 0;">
+
+                                                                           =
+         <a href=3D"mailto:info@janssensimmobilier.com?subject=3Dje%20fais%=
+20le%20point%20sur%20ma%20recherche&amp;body=3DJe%20d%C3%A9taille%20ma%20re=
+cherche%20en%20quelques%20lignes" target=3D"_blank" style=3D"text-decoratio=
+n:none;text-size-adjust:100%;background-color:transparent;color:rgb(23, 26,=
+ 41);">
+                                                                           =
+             <img src=3D"https://mcusercontent.com/73d56d806fd449c2d661cc01=
+2/images/e87dbfdc-7b59-d0ab-0e76-5314e68e3038.png" style=3D"text-decoration=
+:none;outline-width:initial;outline-style:none;outline-color:initial;height=
+:auto;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;=
+border-top-width:0px;vertical-align:bottom;outline: none; height: auto; bor=
+der-width: 0px; vertical-align: bottom; max-width: 500px; padding-bottom: 0=
+px; border-radius: 0%; width: auto;" class=3D"mcnImage" width=3D"0" height=
+=3D"0">
+                                                                           =
+         </a>
+
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+
+                                                                    <table =
+align=3D"right" width=3D"273px" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"mcnImageGroupContentContainer" style=3D"text-size-adjust:10=
+0%;border-collapse:collapse;">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+                                                                           =
+     <td class=3D"mcnImageGroupContent" valign=3D"top" style=3D"text-size-a=
+djust:100%;padding-right:9px;padding-top: 0; padding-bottom: 0;">
+
+                                                                           =
+         <a href=3D"mailto:info@janssensimmobilier.com?subject=3DJe%20ne%20=
+suis%20plus%20en%20recherche%20d'achat&amp;body=3DJe%20ne%20souhaite%20plus=
+%20recevoir%20d'offres%20de%20votre%20agence" target=3D"_blank" style=3D"te=
+xt-decoration:none;text-size-adjust:100%;background-color:transparent;color=
+:rgb(23, 26, 41);">
+                                                                           =
+             <img src=3D"https://mcusercontent.com/73d56d806fd449c2d661cc01=
+2/images/678cf2ba-c0f4-d76c-6bc6-c272daef0e99.png" style=3D"text-decoration=
+:none;outline-width:initial;outline-style:none;outline-color:initial;height=
+:auto;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;=
+border-top-width:0px;vertical-align:bottom;outline: none; height: auto; bor=
+der-width: 0px; vertical-align: bottom; max-width: 500px; padding-bottom: 0=
+px; border-radius: 0%; width: auto;" class=3D"mcnImage" width=3D"0" height=
+=3D"0">
+                                                                           =
+         </a>
+
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                    <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnDividerBlock" s=
+tyle=3D"table-layout:fixed;text-size-adjust:100%;border-collapse:collapse;m=
+in-width:100%;">
+                                                        <tbody class=3D"mcn=
+DividerBlockOuter">
+                                                            <tr>
+                                                                <td class=
+=3D"mcnDividerBlockInner" style=3D"text-size-adjust:100%;min-width:100%;pad=
+ding:18px;">
+                                                                    <table =
+class=3D"mcnDividerContent" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" width=3D"100%" style=3D"text-size-adjust:100%;border-collapse:collapse;mi=
+n-width:100%;border-top: 2px solid #EAEAEA;">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+                                                                           =
+     <td style=3D"text-size-adjust:100%;">
+                                                                           =
+         <span></span>
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+                                                                    <!--
+                                                                        <td=
+ class=3D"mcnDividerBlockInner" style=3D"padding: 18px;">
+                                                                        <hr=
+ class=3D"mcnDividerContent" style=3D"border-bottom-color:none; border-left=
+-color:none; border-right-color:none; border-bottom-width:0; border-left-wi=
+dth:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0;=
+ margin-left:0;" />
+                                                                    -->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                        <table border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnCaptionBloc=
+k" style=3D"text-size-adjust:100%;border-collapse:collapse;"><tbody class=
+=3D"mcnCaptionBlockOuter">
+                                                            <tr>
+                                                                <td class=
+=3D"mcnCaptionBlockInner" valign=3D"top" style=3D"text-size-adjust:100%;pad=
+ding:9px;">
+                                                                    <table =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnCaptionRightCo=
+ntentOuter" width=3D"100%" style=3D"text-size-adjust:100%;border-collapse:c=
+ollapse;">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+                                                                           =
+     <td valign=3D"top" class=3D"mcnCaptionRightContentInner" style=3D"text=
+-size-adjust:100%;padding:0 9px;">
+                                                                           =
+         <table align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"mcnCaptionRightImageContentContainer" width=3D"132px" style=
+=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+             <tbody>
+                                                                           =
+                 <tr>
+                                                                           =
+                     <td class=3D"mcnCaptionRightImageContent" align=3D"cen=
+ter" valign=3D"top" style=3D"text-size-adjust:100%;">
+                                                                           =
+                         <img src=3D"data:image/png;base64,iVBORw0KGgoAAAAN=
+SUhEUgAAALQAAAC0CAIAAACyr5FlAAAN9UlEQVR42u2d+XMUxxXHp2dmd2fvXe3q2NWxSAhJICG=
+QuMQhGzDGBtsxiXHFRwimjJPg2IntH1yucir/RCpVyS8plxPHZYgDtjltc4MQlsQhYQvQvUKra7=
+X3PUfnB6cc44B1sMf06H1/VFFUz9vPfPu91z3dqHVHEwUC3Us0hAAEcIAADhDAAQI4QAAHCOAAA=
+RwggAMEcIAADhAI4AABHCCAAwRwgAAOEMABAjhAAAcI4AABHCAQwAECOEAABwjgAAEcIIADBHCA=
+AA4QwAECOEAggAMEcIAADlAaxc6T50Q0zebZdaUVproGrauSc5SyOj1iVYhhEMsihL77lxhTWOA=
+pLEk8LwkC5lNCJCSEQ8nJscT4SPT21/HBHiESBjgUIq6swrpyg6G6TpNfxBU4GJ2OQve1TERRlE=
+pFURTzv78Vf0uNmEwkvRPJkaHwra5QZ3t0sJcSBSW/UQo+MI5WqY3L1zh++qKxqo5mmDT/71gK3=
+/5m+IO/RrqvY4EHOIiRymq3rG62N281VNXSLEt9b9ZIKx9YEoXIra+nLp70t57h/V6AQ+YPhCyr=
+mst2vaopdGYQi7sRwaIQdQ+43/tTuKtdSbFk9taUKMcw7AXOZ/eUvPArjb0AMUw2yKAoCiFEM2p=
+LnmVNM2O0JMfuiNEwwCEvwzDWNZa/9q5tdTOj4bKExd0DYNQaU3WtdsGiaN8tIegHOORSpxpq6s=
+v3vWNYUIloJgdkfA8RTX6RpbEpOtTLT01QGAMcOQWDYa3rNi945S1tUTHKIRbfm2RYvdG0ZHliz=
+JPwuMku90h3DX11reuXr2oLnYiWzbMgxBU6XC+/oS1bCHDkTFxxWemu32rsBZQMPOMHMx1X4Kh4=
+44+6imqAIyfNDJvr128bFy35tqspwxxZ76p0PLMbsSqAI9uvpn3zE6aapdkrWeeUf1hXrrNveUq=
+2I1QmHJyztGDLT2iZv5QIMSp1yXN7DUuWAxzZGrRaU/bym1yhk4A3EiG1yeJ46jlapwc4shFuy5=
+qHLPUriPFqhIw1S4019QBH5kes1eWt34JohqAxq0zm/K07KKLGTCQc+opqY1UtYSkeos1LV5hXr=
+AM4MlykbNymMluJY5rV6uwPP8ZodQBHxoqUYpd5+RoZNUNnk3kYKhdrikoAjgy5Bm1d06y25BFa=
+fqssefqapQBHZsaqM5jqVyGGIRQORq2xEGV7JMGhKXRqHSSvISOkW7BIne8AODIAh6OU0RspkqU=
+yW7TliwCO9EtX4mI0GqLhYNRq/cLqH/kwAuCY62uXX0RknXJ3Us05ShHLAhxpnrDVVptMV+dnI3=
+VePsCR7oGq1DSnJXTt++60w0qr1ABHWsWqWE5HkS9apUIMOEe6Y0rKCzfdk9AwraQ75WBYUmL64=
+8IUIqWPRw4cNE3ckve9I84wpKTVcHgLCOAAARwggAMEcNyV5GPyG2AAR4YkilgQ4AcDOO5jHoSf=
+aPDfpxBFCksARzolSRgTEtPpZ0gJ4EjvQLFESkynQUOSSLFAqFayLURRmJDTS8mpVjBWRs5BUcS=
+cBkUOHJKIRFEZCSkph9oSBAeWFHGWtCSKFOQc6adDEc4hpRIUBXCk3Y0lRUwrEjGZE1HOoYxSNp=
+XE0OdItx1LymifSwKPIOdIe/mHRYEiv5rFfIqUZyCpCSbxSrjWBKdSMK2k3TkwFnhS8nyYVrIqh=
+CjF5BwYVmXT7xx8SgENdJxKUtA+T7NzkLNeNY1zpFKwnyMDYU0myPcNLCZikgQ5R7olJuKkl7IY=
+YykeJ2UzLFFwxKLEbwbDkhANw8JbZpyD8A46liQhEiJltETBEQlLhFezkiCIYYAjA+JDfsynyHY=
+OQUj5vABH+iWEgkI8RjQcYjQsxcIARyamlZAUixBdqyS94wJMKxlxjkgo7hkmuo6Ne9wSOTMjUU=
+2wVDLaf1sidrMgFvjYQA9BA6bJevWC178iqBT8YUIdCcWH+gCOTCnh7o+5+wntkybGPUmi7qgmD=
+A4s8P7WM5JA3q4fLIrB9hYhHAQ4MqjwjasEtQq+UyrgC1w+S9YeafLgSE2ORnq7yZpZsCQGu9qJ=
+K7XIg0NMxINXLpH13awYj/kunqRIWzUk8Ct7jAMdl1J+LzHmgXH8zlCs7yZxkSbyCAYh6Jv48jN=
+S5m+McaizXQgFAI4safLzT1IBHxHmISTivkunSPzQl1Q4hKA/eO0yAZkHloLXLscGe0kMMqlwYF=
+EIdLTIfVcpxkIsOnrwA0K7dgQf+xTp7oyNDMk87qHursRQL6ERJhgOPujznjoi528kJYEPtF8gs=
+Z9LPBwUxlPnTsjXPDBOTk2GO9vI3TFP9mmCYjTiv3hSnq+mJAres8eT4x5yw0v8UZOBjpb4+KgM=
+bSMx5pk8cYjoA2eIhyPhcYc62+T2G0g872s5xfu9RMeWeDikVNJ35hgf9Mtqak9NjfsvnyU9tko=
+4wTjc0z116bR8DqLEkuS/ejkxPABw5F6IwpMnDiVkkvphnJyamDx5WCL8ExtKMWefJzxDgY5Lcp=
+hZJIH3nj4W77+lgKgqBA4sCFNnj6dynnlgHBsenDx1RBlRVc6tCbGBnrHD+3N7wAvGkq/lJO8dA=
+zjk5h7S+OGPwj3dOdtwhaWoe8B7+pgyjuGmFHbfipRMTBz/txiL5cQ0+Ej4zvt/5n2Tiomn0i7j=
+CXRcDNy4kn3zwJI4deHL4NVWJQVTaXCI0Yhn/9+iw4NZzUwxjrr7J44fVFgwFXiNV6z/1ujBf/D=
+RcNbIEKIRz4H34uR3vZQPB0VRgbbz/tYz2UkMhUR89OiBwFfnKIVcXql0OMRoxPPx38N9NzP+g2=
+EcunHFe+KgYioU5cOBGIYP+sY+/ZCPRDKafEiiEOrqkHgesSoFhrF1R5MyngRTiOE4zlGqX1ijW=
+1CpKSrWFDi4ohKaZamMHfyJJYkP+hNjI4nR4dhQX3ywJzrYK0VCyrg3iCUfb0RrOF15lW3j49YV=
+6zV5Ngplzw4RTautNrXVZlpc/123I3yz09dyKtTVwfu8RCcipDoHUqm54jJDVZ2hus5QVacpdDK=
+ZdIg5tD2EcCg22BP8+lqstzs60MMHfIi0+0DIg4Mxmi2Na/M3bdOWLVQZTYiRERP/n65iSZKS8e=
+TUpK/tgvf00dToMEGpKyFwIERrdTpXpWXl+rx1m7mCIkQzxLkdH42Ev7nmPfd59PaNlHeCkv1ll=
+wTAwZqt1qaNeWs36l2VrMmCaLI/p5AEPj7iDna2+85/Hh3ooWR8T4h84UAMo7LaLU0bC7fv1BY6=
+yWbiXhJiUX/b+fEjB+LDA1IiDnDMMK1g9YuW5DU9bGlcq3WWIoallCqM+XAwdOPqVMvJcGe73E4=
+MkxkcCGmcruKdu62rNrA6HUUhipS7SR6Aj2/7JdHBnpED7wXbL8rnQiq5wEFrOG1FlX39FmvTRo=
+0tn5qXkvhUsLPde/poqKtDCAdzviVWBnAgpC2tKNrxgnnZKrXFprzcYrYdEj4WjQ/2jR09EGy7k=
+Nst7DmFg2G1jhLbxm0FW59WGUzKn0FmVdSkkv4rrWNH9sf7boo5SldzBgfnKLFt2m5bu5krcsq6=
+kZVTRBI+b/D6V5MnDsX6bmY/F8kBHLRWn7dus3Pnbm2hE5iYYdE78cUno4f+KQT92VysySocrMF=
+oXLY6f/OTproGRq2BX33mFoIlKe5xe08fm7rwRWpyTGlw6BbWFP/8ZXP9Skatnhc1aiYQEYWYZ9=
+jz8fuBS6ezkKtmHA5MIW3pAvum7fZN2zVmKzDx4BIT8UBHy/jRf0X6buJMHpmXWThYs7Vg6w77Q=
+49xRU5F7pXKYcWbDPgDbedHP/kw4XEjkuBAiNUbDLWNxTt36yuqSFxBJWWiSQX9Y4f3T509zvsm=
+0779LP1w0BrO1NBU8MiTxtoGltPCPJJpSXwq5u73XfjSe/4LfmpCvnBoy6tKd71qWbZqvjc6c+E=
+i8RG3+4O/BNsv4jSdoJceOJBKbahZatuwxbxiPZdnB7fIGSECH+jsmDp3Ini9TQg+6NnwDwwHor=
+VlFUVPP29paFKbLdnc3Au6X64qJhLRwd7xwx/5Ws8+yH6zucOBGJZzluY1P2rf9ARnywe3kNssI=
+yYTwc72iRMHw99cm9tmojnCQeuNhduesT38uA5WRuTtInwoGOzqGP30w3jfzdmWM7OGg1apDbUN=
+Jb/YZyhfBFknKUr5p0Y/+8h78rNZbRNh9taUzLx7oXGUOp/dU/zsHp2jBMggSAynNdU2GKvr+FA=
+gOTpCzewLmlnAYVq2uuL1P1gb17JaHcwjhAkhxDCa/EJzw1pap4v1ds+k3J0RHKzJUrBtZ8mufb=
+qiYkTTQAa5iDAajaGqTlPsig8PTHvt3PRwsGZr2Z7fFz2xU6U3AhbKMBHOWWZauiLpHU+O3pkrH=
+AipC4srXns3b/UGmlUBGcqhg6bVZqthcX1yciwxMjQXOLSuyvLfvG1Z2ggrZ4oUq9Mbq+uEWCTu=
+7r/nBrP7Vhy0weR65S1z7XJoeirYQjT5Ra6XfmdZ3XxvBu75V5XVXrHvHdPiZUCG8v1Dbyh5/hV=
+9Vd3M4EB0/mM7rCvXQydjnviHrsRV/vq7KlvB9HAYF9fnP/IUrYKNW/OHD1pf7HL8bBfScD8GB2=
+u2lu19k7PBsvu884/8h7YaFi25LxwMp83b8KjeVQmpxrxMPozOnS/dFw59bYOteQukGvPWPMx1j=
+feFw7njRWPlYojS/MWDYe7vHAtroN8FujccsFkcNE0pCwIBHCCAAwRwgAAOEMABAjhActZ/ANtk=
++UISKIzqAAAAAElFTkSuQmCC" style=3D"text-decoration:none;outline-width:initi=
+al;outline-style:none;outline-color:initial;height:auto;border-left-width:0=
+px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;vert=
+ical-align:middle;outline: none; height: auto; border-width: 0px; vertical-=
+align: middle; width: auto;" width=3D"0" height=3D"0">
+                                                                           =
+                     </td>
+                                                                           =
+                 </tr>
+                                                                           =
+             </tbody>
+                                                                           =
+         </table>
+                                                                           =
+         <table class=3D"mcnCaptionRightTextContentContainer" align=3D"righ=
+t" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"396px" style=
+=3D"text-size-adjust:100%;border-collapse:collapse;">
+                                                                           =
+             <tbody>
+                                                                           =
+                 <tr>
+                                                                           =
+                     <td valign=3D"top" class=3D"mcnTextContent" style=3D"w=
+ord-break:break-word;text-size-adjust:100%;">
+                                                                           =
+                         <span style=3D"font-family:georgia,times,times new=
+ roman,serif"><span style=3D"font-size:13px">Votre
+                                                                           =
+                                 contact privil=C3=A9gi=C3=A9<br>
+                                                                           =
+                                 Romain
+                                                                           =
+                                 Bouvard<br>
+                                                                           =
+                                 contact@janssensimmobilier.com<br>
+                                                                           =
+                                 + 33 7 82 77 09 47<br>
+                                                                           =
+                                 SARL Janssens Alpilles<br>
+                                                                           =
+                                 33 Boulevard Victor Hugo<br>
+                                                                           =
+                                 ST REMY DE PROVENCE<br></span></span>
+                                                                           =
+                     </td>
+                                                                           =
+                 </tr>
+                                                                           =
+             </tbody>
+                                                                           =
+         </table>
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valign=3D"top" id=3D"te=
+mplateFooter" style=3D"text-size-adjust:100%;">
+                                                    <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"mcnTextBlock" styl=
+e=3D"text-size-adjust:100%;border-collapse:collapse;min-width:100%;">
+                                                        <tbody class=3D"mcn=
+TextBlockOuter">
+                                                            <tr>
+                                                                <td valign=
+=3D"top" class=3D"mcnTextBlockInner" style=3D"text-size-adjust:100%;padding=
+-top:9px;">
+                                                                    <!--[if=
+ mso]>
+                                                                        <ta=
+ble align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" style=3D"width:100%;">
+                                                                        <tr=
+>
+                                                                    <![endi=
+f]-->
+
+                                                                    <!--[if=
+ mso]>
+                                                                        <td=
+ valign=3D"top" width=3D"600px" style=3D"width:600px;">
+                                                                    <![endi=
+f]-->
+                                                                    <table =
+align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"te=
+xt-size-adjust:100%;border-collapse:collapse;max-width:100%;min-width:100%;=
+" width=3D"100%" class=3D"mcnTextContentContainer">
+                                                                        <tb=
+ody>
+                                                                           =
+ <tr>
+
+                                                                           =
+     <td valign=3D"top" class=3D"mcnTextContent" style=3D"word-break:break-=
+word;text-size-adjust:100%;padding-top:0;padding-right:18px; padding-bottom=
+:9px; padding-left:18px;">
+
+                                                                           =
+         <img data-file-id=3D"5182037" src=3D"https://mcusercontent.com/73d=
+56d806fd449c2d661cc012/images/7be6043a-9096-ce5e-907a-3b15b8055366.png" sty=
+le=3D"text-decoration:none;outline-width:initial;outline-style:none;outline=
+-color:initial;height:auto;border-left-width:0px;border-bottom-width:0px;bo=
+rder-right-width:0px;border-top-width:0px;vertical-align:middle;border:0px;=
+width: 200px; height: 100px; margin: 0px;" width=3D"200" height=3D"0"><br>
+                                                                           =
+         www.janssens-immobilier.com<br>
+                                                                           =
+         <br>
+                                                                           =
+         Want to change how you receive these emails?<br>
+                                                                           =
+         You can <a href=3D"*|UPDATE_PROFILE|*" style=3D"text-decoration:no=
+ne;text-size-adjust:100%;background-color:transparent;color:rgb(23, 26, 41)=
+;">update your
+                                                                           =
+             preferences</a> or <a href=3D"*|UNSUB|*" style=3D"text-decorat=
+ion:none;text-size-adjust:100%;background-color:transparent;color:rgb(23, 2=
+6, 41);">unsubscribe
+                                                                           =
+             from this list</a>.
+                                                                           =
+     </td>
+                                                                           =
+ </tr>
+                                                                        </t=
+body>
+                                                                    </table=
+>
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+d>
+                                                                    <![endi=
+f]-->
+                                                                    <!--[if=
+ mso]>
+                                                                        </t=
+r>
+                                                                        </t=
+able>
+                                                                    <![endi=
+f]-->
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+                                        <!--[if (gte mso 9)|(IE)]>
+                                            </td>
+                                            </tr>
+                                            </table>
+                                            <![endif]-->
+                                        <!-- // END TEMPLATE -->
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                        </center>
+                </div>
+           =20
+
+--===============5116539355253161527==--
+--===============6618497361173135074==
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="image0"
+MIME-Version: 1.0
+
+
+--===============6618497361173135074==--
